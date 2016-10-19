@@ -12,9 +12,9 @@ import org.jsoup.nodes.FormElement;
 import java.io.IOException;
 
 class Table extends AsyncTask<Void, Void, Void> {
-    private String url = "https://zajecia.wmi.amu.edu.pl/plan_zaoczne/PlanZaoczne.aspx";
+    private static final String url = "https://zajecia.wmi.amu.edu.pl/plan_zaoczne/PlanZaoczne.aspx";
     private String value;
-    private TextSettable textSettable;
+    private final TextSettable textSettable;
 
     Table(TextSettable ts) {
         this.textSettable = ts;

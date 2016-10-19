@@ -10,7 +10,7 @@ import pl.plyr0.scraper.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements TextSettable {
 
-    ActivityMainBinding binding;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,13 @@ public class MainActivity extends AppCompatActivity implements TextSettable {
                     }
                 }
         );
+        new Table(MainActivity.this).execute();
+        binding.activityMain.setRefreshing(true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
