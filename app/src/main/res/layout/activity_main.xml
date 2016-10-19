@@ -8,12 +8,18 @@
         android:layout_height="match_parent"
         tools:context="pl.plyr0.scraper.MainActivity">
 
-        <TextView
-            android:id="@+id/activity_main_textview"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:text="Hello World!" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/activity_main_textview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="Hello World!" />
+
+        </ScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 </layout>
