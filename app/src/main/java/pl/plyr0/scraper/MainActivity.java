@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.view.View;
 
 import pl.plyr0.scraper.databinding.ActivityMainBinding;
 
@@ -25,6 +26,12 @@ public class MainActivity extends AppCompatActivity implements TextSettable {
                     }
                 }
         );
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.scrollView1.smoothScrollTo(0, 0);
+            }
+        });
         new Table(MainActivity.this).execute();
         binding.activityMain.setRefreshing(true);
     }
