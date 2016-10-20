@@ -4,12 +4,16 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
+import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.List;
 
 import pl.plyr0.scraper.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements TextSettable {
+public class MainActivity extends AppCompatActivity implements ConsumerAble {
 
     private ActivityMainBinding binding;
 
@@ -43,7 +47,26 @@ public class MainActivity extends AppCompatActivity implements TextSettable {
 
     @Override
     public void setText(String text) {
-        binding.activityMainTextview.setText(Html.fromHtml(text));
+        //binding.activityMainTextview.setText(Html.fromHtml(text));
         binding.activityMain.setRefreshing(false);
+    }
+
+    @Override
+    public void setData(final List<Row> rows) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                for (Row r : rows) {
+                    //Log.d(MainActivity.class.getName(), r.toString());
+                    TextView tv = new TextView(binding.linearLayout1.getContext());
+                    //tv.setLayoutParams(lparams);
+                    tv.setText(r.getDate() + " " + r.getHourStart() + " " + r.getClassroom1() + " " + r.getSubject());
+                    binding.linearLayout1.addView(tv);
+                }
+                binding.activityMain.setRefreshing(false);
+            }
+        });
     }
 }
