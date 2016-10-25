@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import pl.plyr0.scraper.model.Row;
@@ -16,22 +15,20 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
     private List<Row> data;
 
     public MyAdapter(List<Row> data) {
-        if (data == null) {
-            data = new ArrayList<>(3);
-            data.add(new Row("a", "a", "a", "a", "a", "a", "a", "a"));
-            data.add(new Row("a", "a", "a", "a", "a", "a", "a", "a"));
-            data.add(new Row("a", "a", "a", "a", "a", "a", "a", "a"));
-        } else {
-            this.data = data;
-        }
+        this.data = data;
         Log.d(MyAdapter.class.getName(), "ctor " + data.size());
+    }
+
+    public void setData(List<Row> data) {
+        this.data = data;
+        notifyDataSetChanged();
     }
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(MyAdapter.class.getName(), "onCreat");
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false);
-        return new CustomViewHolder(v);
+        return new CustomViewHolder((TextView) v);
     }
 
     @Override
@@ -42,16 +39,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
 
     @Override
     public int getItemCount() {
-        return (null != data ? data.size() : 0);
+        return data.size();
     }
 
-    class CustomViewHolder extends RecyclerView.ViewHolder {
+    public static class CustomViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
 
-        public CustomViewHolder(View v) {
+        public CustomViewHolder(TextView v) {
             super(v);
             Log.d(MyAdapter.class.getName(), "ctor holder");
-            mTextView = (TextView) v;
+            mTextView = v;
             mTextView.setText("aaa");
         }
     }

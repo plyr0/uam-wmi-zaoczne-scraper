@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.plyr0.scraper.databinding.ActivityMainBinding;
@@ -15,6 +16,7 @@ import pl.plyr0.scraper.model.Row;
 public class MainActivity extends AppCompatActivity implements ConsumerAble {
 
     private ActivityMainBinding binding;
+    private MyAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +34,21 @@ public class MainActivity extends AppCompatActivity implements ConsumerAble {
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.scrollView1.smoothScrollTo(0, 0);
+                binding.recycler.scrollToPosition(0);
             }
         });
-        //new Table(MainActivity.this).execute();
-        //binding.activityMain.setRefreshing(true);
 
         binding.recycler.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.recycler.setLayoutManager(mLayoutManager);
-        MyAdapter mAdapter = new MyAdapter(null);
-        binding.recycler.setAdapter(mAdapter);
+
+        List<Row> data = new ArrayList<>(3);
+        data.add(new Row("a", "a", "a", "a", "a", "a", "a", "a"));
+        data.add(new Row("a", "a", "a", "a", "a", "a", "a", "a"));
+        data.add(new Row("a", "a", "a", "a", "a", "a", "a", "a"));
+        recyclerAdapter = new MyAdapter(data);
+        binding.recycler.setAdapter(recyclerAdapter);
     }
 
     @Override
@@ -61,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements ConsumerAble {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                recyclerAdapter.setData(rows);
                 binding.activityMain.setRefreshing(false);
             }
         });
