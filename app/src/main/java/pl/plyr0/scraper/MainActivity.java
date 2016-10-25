@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pl.plyr0.scraper.databinding.ActivityMainBinding;
+import pl.plyr0.scraper.events.UpdateAble;
 import pl.plyr0.scraper.model.Row;
+import pl.plyr0.scraper.web.TableWebTask;
 
-public class MainActivity extends AppCompatActivity implements ConsumerAble {
+public class MainActivity extends AppCompatActivity implements UpdateAble {
 
     private ActivityMainBinding binding;
     private MyAdapter recyclerAdapter;
@@ -23,11 +25,11 @@ public class MainActivity extends AppCompatActivity implements ConsumerAble {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.activityMain.setOnRefreshListener(
+        binding.refreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        new Table(MainActivity.this).execute();
+                        new TableWebTask(MainActivity.this).execute();
                     }
                 }
         );
@@ -57,19 +59,16 @@ public class MainActivity extends AppCompatActivity implements ConsumerAble {
     }
 
     @Override
-    public void setText(String text) {
-        //binding.activityMainTextview.setText(Html.fromHtml(text));
-        binding.activityMain.setRefreshing(false);
+    public void setData(final List<Row> rows) {
+        recyclerAdapter.setData(rows);
+        binding.refreshLayout.setRefreshing(false);
+        binding.textViewWarning.setVisibility(View.GONE);
     }
 
     @Override
-    public void setData(final List<Row> rows) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                recyclerAdapter.setData(rows);
-                binding.activityMain.setRefreshing(false);
-            }
-        });
+    public void setError(String error) {
+        binding.refreshLayout.setRefreshing(false);
+        binding.textViewWarning.setText(error);
+        binding.textViewWarning.setVisibility(View.VISIBLE);
     }
 }

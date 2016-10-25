@@ -13,15 +13,16 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/text_view_warning"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:text="aaaaaaaaa"
-                android:textAlignment="center"
-                android:textSize="12sp" />
+                android:gravity="center"
+                android:textSize="12sp"
+                android:visibility="gone"
+                android:textColor="@color/red"/>
 
             <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/activity_main"
+                android:id="@+id/refresh_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

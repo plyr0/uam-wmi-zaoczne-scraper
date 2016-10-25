@@ -1,4 +1,4 @@
-package pl.plyr0.scraper;
+package pl.plyr0.scraper.web;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -8,13 +8,12 @@ import java.util.List;
 
 import pl.plyr0.scraper.model.Row;
 
-class TableParser {
-    private List<Row> rows = new ArrayList<>();
-
-    public TableParser(ConsumerAble ts, Element tbody) {
-        for (Element tr : tbody.getElementsByTag("tr")) {
+public class TableParser {
+    public static List<Row> parse(Element tbody) {
+        Elements tableRows = tbody.getElementsByTag("tr");
+        List<Row> result = new ArrayList<>(tableRows.size());
+        for (Element tr : tableRows) {
             Elements el = tr.getElementsByTag("td");
-            //Log.d(TableParser.class.getName(), el.get(0).text());
             Row row = Row.builder()
                     .date(el.get(0).text())
                     .hourStart((el.get(1).text()))
@@ -25,8 +24,8 @@ class TableParser {
                     .hoursLength((el.get(6).text()))
                     .hourEnd((el.get(7).text()))
                     .build();
-            rows.add(row);
+            result.add(row);
         }
-        ts.setData(rows);
+        return result;
     }
 }
