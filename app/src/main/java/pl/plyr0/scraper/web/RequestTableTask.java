@@ -60,11 +60,11 @@ public class RequestTableTask extends AsyncTask<Void, Void, Void> {
                 __EVENTVALIDATION = form.select("input[name=__EVENTVALIDATION]").first().attr("value");
             }
             Document document = Jsoup.connect(url)
-                    .cookies(cookies)
-                    .postDataCharset("UTF-8")
+                    //.cookies(cookies)
+                    //.postDataCharset("UTF-8")
                     .data("__VIEWSTATE", __VIEWSTATE)
                     .data("__EVENTVALIDATION", __EVENTVALIDATION)
-                    .data("__VIEWSTATEGENERATOR", __VIEWSTATEGENERATOR)
+                    //.data("__VIEWSTATEGENERATOR", __VIEWSTATEGENERATOR)
                     .data("Studia", "*")
                     .data("RokStudiow", "*")
                     .data("Semestr", "2016Z")
@@ -73,7 +73,6 @@ public class RequestTableTask extends AsyncTask<Void, Void, Void> {
                     .data("datepicker1", "2016-10-19")
                     .data("datepicker2", "")
                     .data("Button1", "Szukaj")
-                    .followRedirects(true)
                     .post();
 
             parsed = TableParser.parse(document);
