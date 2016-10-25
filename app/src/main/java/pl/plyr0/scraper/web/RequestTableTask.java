@@ -6,7 +6,6 @@ import android.util.Log;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.nodes.FormElement;
 
 import java.io.IOException;
@@ -17,14 +16,14 @@ import java.util.Map;
 import pl.plyr0.scraper.events.UpdateAble;
 import pl.plyr0.scraper.model.Row;
 
-public class TableWebTask extends AsyncTask<Void, Void, Void> {
+public class RequestTableTask extends AsyncTask<Void, Void, Void> {
     private static final String url = "https://zajecia.wmi.amu.edu.pl/plan_zaoczne/PlanZaoczne.aspx";
     private List<Row> parsed;
     private String error = "OK";
     private final UpdateAble updateAble;
     private boolean oneQuery = true;
 
-    public TableWebTask(UpdateAble ts) {
+    public RequestTableTask(UpdateAble ts) {
         this.updateAble = ts;
     }
 
@@ -60,7 +59,7 @@ public class TableWebTask extends AsyncTask<Void, Void, Void> {
                 __VIEWSTATE = form.select("input[name=__VIEWSTATE]").first().attr("value");
                 __EVENTVALIDATION = form.select("input[name=__EVENTVALIDATION]").first().attr("value");
             }
-            Document result = Jsoup.connect(url)
+            Document document = Jsoup.connect(url)
                     .cookies(cookies)
                     .postDataCharset("UTF-8")
                     .data("__VIEWSTATE", __VIEWSTATE)
@@ -77,17 +76,14 @@ public class TableWebTask extends AsyncTask<Void, Void, Void> {
                     .followRedirects(true)
                     .post();
 
-            //Log.d(Table.class.getName(), result.getElementById("DataGrid1").toString());
-            Element table = result.getElementsByClass("row").first();
-            if (table != null) {
-                parsed = TableParser.parse(table.select("table > tbody").first());
-            } else {
+            parsed = TableParser.parse(document);
+            if (parsed == null) {
                 error = "Błąd parsowania";
             }
 
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d(TableWebTask.class.getName(), e.getMessage());
+            Log.d(RequestTableTask.class.getName(), e.getMessage());
             error = "Błąd połączenia";
         }
         return null;

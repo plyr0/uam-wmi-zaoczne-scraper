@@ -5,10 +5,12 @@ package pl.plyr0.scraper.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
 @Data
 @AllArgsConstructor(suppressConstructorProperties = true)
+@NoArgsConstructor
 public class Row {
     String date;
     String hourStart;
@@ -18,4 +20,5 @@ public class Row {
     String lector;
     String hoursLength;
     String hourEnd;
+    String code;
 }

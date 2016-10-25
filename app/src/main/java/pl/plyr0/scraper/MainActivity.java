@@ -13,7 +13,7 @@ import java.util.List;
 import pl.plyr0.scraper.databinding.ActivityMainBinding;
 import pl.plyr0.scraper.events.UpdateAble;
 import pl.plyr0.scraper.model.Row;
-import pl.plyr0.scraper.web.TableWebTask;
+import pl.plyr0.scraper.web.RequestTableTask;
 
 public class MainActivity extends AppCompatActivity implements UpdateAble {
 
@@ -23,13 +23,20 @@ public class MainActivity extends AppCompatActivity implements UpdateAble {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initViewAndListeners();
+        initRecycler();
+        new RequestTableTask(MainActivity.this).execute();
+        binding.refreshLayout.setRefreshing(true);
+    }
+
+    private void initViewAndListeners() {
         setContentView(R.layout.activity_main);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.refreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
-                        new TableWebTask(MainActivity.this).execute();
+                        new RequestTableTask(MainActivity.this).execute();
                     }
                 }
         );
@@ -39,16 +46,15 @@ public class MainActivity extends AppCompatActivity implements UpdateAble {
                 binding.recycler.scrollToPosition(0);
             }
         });
-
         binding.recycler.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         binding.recycler.setLayoutManager(mLayoutManager);
+    }
 
+    private void initRecycler() {
         List<Row> data = new ArrayList<>(3);
-        data.add(new Row("a", "a", "a", "a", "a", "a", "a", "a"));
-        data.add(new Row("a", "a", "a", "a", "a", "a", "a", "a"));
-        data.add(new Row("a", "a", "a", "a", "a", "a", "a", "a"));
+        data.add(new Row("a", "a", "a", "a", "Empty", "a", "a", "a", "a"));
         recyclerAdapter = new MyAdapter(data);
         binding.recycler.setAdapter(recyclerAdapter);
     }
