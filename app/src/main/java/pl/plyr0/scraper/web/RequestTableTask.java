@@ -65,7 +65,7 @@ public class RequestTableTask extends AsyncTask<Void, Void, Void> {
                     .data("__VIEWSTATE", __VIEWSTATE)
                     .data("__EVENTVALIDATION", __EVENTVALIDATION)
                     //.data("__VIEWSTATEGENERATOR", __VIEWSTATEGENERATOR)
-                    .data("Studia", "*")
+                    .data("Studia", "ZL-INF")
                     .data("RokStudiow", "*")
                     .data("Semestr", "2016Z")
                     .data("Przedmiot", "")

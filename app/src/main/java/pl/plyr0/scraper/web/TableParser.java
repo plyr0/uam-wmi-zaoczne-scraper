@@ -22,13 +22,14 @@ public class TableParser {
             row.setDate(expose(el, 0));
             row.setHourStart(expose(el, 1));
             row.setClassroom1(expose(el, 2));
+            row.setClassroom2(expose(el, 3));
 
             String subjAll = expose(el, 4);
-            int indexOfDash = subjAll.indexOf("-");
+            /*int indexOfDash = subjAll.indexOf("-");
             row.setSubject(subjAll.substring(indexOfDash+2, subjAll.length()));
-            row.setCode(subjAll.substring(0, indexOfDash));
+            row.setCode(subjAll.substring(0, indexOfDash));*/
+            row.setSubject(subjAll);
 
-            row.setClassroom2(expose(el, 3));
             row.setLector(expose(el, 5));
             row.setHoursLength(expose(el, 6));
             row.setHourEnd(expose(el, 7));

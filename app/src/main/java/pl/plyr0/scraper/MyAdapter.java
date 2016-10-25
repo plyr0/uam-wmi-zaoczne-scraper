@@ -1,14 +1,13 @@
 package pl.plyr0.scraper;
 
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
+import pl.plyr0.scraper.databinding.Card2Binding;
 import pl.plyr0.scraper.model.Row;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> {
@@ -16,7 +15,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
 
     public MyAdapter(List<Row> data) {
         this.data = data;
-        Log.d(MyAdapter.class.getName(), "ctor " + data.size());
     }
 
     public void setData(List<Row> data) {
@@ -26,15 +24,27 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
 
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(MyAdapter.class.getName(), "onCreat");
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false);
-        return new CustomViewHolder((TextView) v);
+        Card2Binding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                R.layout.card2, parent, false);
+        return new CustomViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-        holder.mTextView.setText(data.get(position).getSubject());
-        Log.d(MyAdapter.class.getName(), "onBind");
+        Row row = data.get(position);
+        holder.binding.setRow(row);
+
+        /*
+        holder.mTextView.setText(
+                row.getSubject() + "\n" +
+                        row.getDate() + "\n" +
+                        row.getHourStart() + "\n" +
+                        row.getHourEnd() + "\n" +
+                        row.getHoursLength() + "\n" +
+                        row.getClassroom1() + " / " + row.getClassroom2() + "\n" +
+                        row.getLector() + "\n" +
+                        row.getCode() + "\n");
+                        */
     }
 
     @Override
@@ -43,13 +53,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.CustomViewHolder> 
     }
 
     public static class CustomViewHolder extends RecyclerView.ViewHolder {
-        public TextView mTextView;
+        public Card2Binding binding;
 
-        public CustomViewHolder(TextView v) {
-            super(v);
-            Log.d(MyAdapter.class.getName(), "ctor holder");
-            mTextView = v;
-            mTextView.setText("aaa");
+        public CustomViewHolder(Card2Binding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }
