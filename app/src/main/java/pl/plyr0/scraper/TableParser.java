@@ -1,12 +1,12 @@
 package pl.plyr0.scraper;
 
-import android.util.Log;
-
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.plyr0.scraper.model.Row;
 
 class TableParser {
     private List<Row> rows = new ArrayList<>();

@@ -1,13 +1,15 @@
-package pl.plyr0.scraper;
+package pl.plyr0.scraper.model;
 
 // Data	Od godz.	Sala 1	Sala 2	Przedmiot	Prowadzący	Godzin	Do godz.
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
-class Row {
+@AllArgsConstructor(suppressConstructorProperties = true)
+public class Row {
     String date;
     String hourStart;
     String classroom1;

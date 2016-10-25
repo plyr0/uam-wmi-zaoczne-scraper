@@ -4,14 +4,13 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.List;
 
 import pl.plyr0.scraper.databinding.ActivityMainBinding;
+import pl.plyr0.scraper.model.Row;
 
 public class MainActivity extends AppCompatActivity implements ConsumerAble {
 
@@ -36,8 +35,14 @@ public class MainActivity extends AppCompatActivity implements ConsumerAble {
                 binding.scrollView1.smoothScrollTo(0, 0);
             }
         });
-        new Table(MainActivity.this).execute();
-        binding.activityMain.setRefreshing(true);
+        //new Table(MainActivity.this).execute();
+        //binding.activityMain.setRefreshing(true);
+
+        binding.recycler.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+        binding.recycler.setLayoutManager(mLayoutManager);
+        MyAdapter mAdapter = new MyAdapter(null);
+        binding.recycler.setAdapter(mAdapter);
     }
 
     @Override
@@ -56,15 +61,6 @@ public class MainActivity extends AppCompatActivity implements ConsumerAble {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                for (Row r : rows) {
-                    //Log.d(MainActivity.class.getName(), r.toString());
-                    TextView tv = new TextView(binding.linearLayout1.getContext());
-                    //tv.setLayoutParams(lparams);
-                    tv.setText(r.getDate() + " " + r.getHourStart() + " " + r.getClassroom1() + " " + r.getSubject());
-                    binding.linearLayout1.addView(tv);
-                }
                 binding.activityMain.setRefreshing(false);
             }
         });

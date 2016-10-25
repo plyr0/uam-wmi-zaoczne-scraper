@@ -12,23 +12,23 @@
             android:layout_height="match_parent"
             tools:context="pl.plyr0.scraper.MainActivity">
 
+            <TextView
+                android:id="@+id/activity_main_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hello World!" />
+
             <ScrollView
                 android:id="@+id/scrollView1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/linearLayout1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/activity_main_textview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Hello World!" />
-                </LinearLayout>
+                    android:scrollbars="vertical">
+                </android.support.v7.widget.RecyclerView>
             </ScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>
 
